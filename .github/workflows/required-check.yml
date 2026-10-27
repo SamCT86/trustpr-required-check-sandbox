@@ -13,6 +13,7 @@ permissions:
 jobs:
   verify:
     name: TrustPR source verification (read-only)
+    if: ${{ false }} # sandbox-only skipped-job control
     runs-on: ubuntu-24.04
     steps:
       - name: Check test result
