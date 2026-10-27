@@ -1,0 +1,27 @@
+
+name: TrustPR sandbox admission
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: TrustPR source verification (read-only)
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check test result
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ "$PR_TITLE" == *"[FAIL]"* ]]; then
+            echo "Intentional failure"
+            exit 1
+          fi
+          echo "PASS"
+  
